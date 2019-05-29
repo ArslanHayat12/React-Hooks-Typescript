@@ -1,14 +1,16 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useContext } from "react";
 import axios from "axios";
 import { TweetsType } from "../types/types";
 import ChildComponent from "./TwitterChildComponent";
 import { Input } from "antd";
+import { HooksContext } from "../App";
 const Search = Input.Search;
 
 export interface Tweets {
   hits: TweetsType[];
   status: string;
 }
+
 const UseTwitterCallBackAndMemo = () => {
   const [query, setQuery] = useState<string>();
   const [memoCount, setMemoCount] = useState(0);
@@ -22,14 +24,14 @@ const UseTwitterCallBackAndMemo = () => {
     );
   }, [query]);
 
-
   useMemo(() => {
     console.log(memoCount, "memo called");
     return memoCount;
   }, [memoCount]);
-
+  const context = useContext(HooksContext);
   return (
     <>
+    <div> useCallback  {context} </div>
       <Search
         placeholder="search keyword"
         name="title"
@@ -42,7 +44,6 @@ const UseTwitterCallBackAndMemo = () => {
         Change memo count
       </button>
       <ChildComponent action={callbackFunction} />
-
     </>
   );
 };

@@ -5,6 +5,17 @@
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##Basic Hooks
+
+###useState
+###useEffect
+###useContext
+
+##Additional Hooks
+
+###useReducer
+###useCallback
+###useMemo
 
 
 React Hooks: useCallback, useMemo, useReducer,useState and useEffect

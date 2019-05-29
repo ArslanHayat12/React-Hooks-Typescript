@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createContext } from "react";
 import Tweets from "./components/Tweets";
 import UseTwitterCallBackAndMemo from "./components/UseTwitterCallBackAndMemo";
 import TweetsReducer from "./components/useTweetsReducer";
@@ -7,6 +7,8 @@ import "antd/dist/antd.css";
 interface MainState {
   type: string;
 }
+type Hooks = "React Hooks";
+export const HooksContext = createContext<Hooks>("React Hooks");
 class App extends Component<{}, MainState> {
   state: MainState = {
     type: ""
@@ -34,13 +36,15 @@ class App extends Component<{}, MainState> {
           <button onClick={e => this.handleClick(e)} value="useCallback">
             Use Callback Example
           </button>
-          {this.state.type === "useState" ? (
-            <Tweets />
-          ) : this.state.type === "useReducer" ? (
-            <TweetsReducer />
-          ) : (
-            <UseTwitterCallBackAndMemo />
-          )}
+          <HooksContext.Provider value="React Hooks">
+            {this.state.type === "useState" ? (
+              <Tweets />
+            ) : this.state.type === "useReducer" ? (
+              <TweetsReducer />
+            ) : (
+              <UseTwitterCallBackAndMemo />
+            )}
+          </HooksContext.Provider>
         </div>
       </div>
     );
