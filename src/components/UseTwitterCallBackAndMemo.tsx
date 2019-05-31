@@ -1,24 +1,19 @@
 import React, { useState, useMemo, useCallback, useContext } from "react";
-import axios from "axios";
-import { TweetsType } from "../types/types";
+import {fetchData} from "../apis/index";
 import ChildComponent from "./TwitterChildComponent";
 import { Input } from "antd";
 import { HooksContext } from "../App";
 const Search = Input.Search;
 
-export interface Tweets {
-  hits: TweetsType[];
-  status: string;
-}
 
 const UseTwitterCallBackAndMemo = () => {
   const [query, setQuery] = useState<string>();
   const [memoCount, setMemoCount] = useState(0);
 
   const callbackFunction = useCallback(() => {
-    return axios(`https://hn.algolia.com/api/v1/search?query=${query}`).then(
+    return fetchData(query).then(
       results => {
-        return { status: "success", hits: results.data.hits };
+        return { status: "success", hits: results.data };
       },
       error => ({ status: "failure", error })
     );

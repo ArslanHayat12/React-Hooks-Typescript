@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { List } from "antd";
-import { TweetsType } from "../types/types";
-export interface Tweets {
-  hits: TweetsType[];
-  state: string;
-}
-export type TweetsKeyword = Pick<TweetsType, "title">;
-//const Search = Input.Search;
+import { List, Spin } from "antd";
+import { Tweets } from "../interfaces/interface";
+import { fetchData } from "../apis/index";
+
 const TweetService = () => {
   const [data, setData] = useState<Tweets>({ hits: [], state: "simple" });
   useEffect(() => {
-    axios
-      .get("http://hn.algolia.com/api/v1/search?query=redux")
+    fetchData()
       .then(result => {
-        setImmediate(() => {
-          setData(result.data);
-        });
+        setData(result.data);
       })
       .catch(err => {
         console.log("Error", err);
@@ -26,31 +18,42 @@ const TweetService = () => {
     <List
       bordered
       dataSource={data.hits}
-      renderItem={item => <List.Item>{item.title}</List.Item>}
+      renderItem={item => <List.Item>{item.name}</List.Item>}
     />
   );
 };
 
 const TweetSearchService = ({ title }: any) => {
-  const [data, setData] = useState<Tweets>({ hits: [], state: "simple" });
+  const [data, setData] = useState<Tweets>({ hits: [], state: "loaded" });
   useEffect(() => {
-    axios
-      .get(`http://hn.algolia.com/api/v1/search?query=${title}`)
-      .then(result => {
-        setImmediate(() => {
-          setData(result.data);
+    setData({ state: "loading" });
+    const timer = setTimeout(() => {
+      fetchData(title)
+        .then(result => {
+          setData({ hits: result.data.hits, state: "loaded" });
+        })
+        .catch(err => {
+          console.log("Error", err);
         });
-      })
-      .catch(err => {
-        console.log("Error", err);
-      });
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+      // setData({ hits: data.hits, state: "loaded" });
+    };
   }, [title]);
   return (
-    <List
-      bordered
-      dataSource={data.hits}
-      renderItem={item => <List.Item>{item.title}</List.Item>}
-    />
+    
+    <>
+      {data.state === "loading" ? (
+        <Spin />
+      ) : (
+        <List
+          bordered
+          dataSource={data.hits}
+          renderItem={item => <List.Item>{item.name}</List.Item>}
+        />
+      )}
+    </>
   );
 };
 

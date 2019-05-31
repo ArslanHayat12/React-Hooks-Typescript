@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { TweetsType } from "../types/types";
+import { Tweets} from "../interfaces/interface";
 import { List } from "antd";
-export interface Tweets {
-  hits: TweetsType[];
-  status: string;
-}
+
 const ChildComponent = ({ action }: any) => {
   const [value, setValue] = useState<Tweets>({ hits: [], status: "" });
 
@@ -21,7 +18,7 @@ const ChildComponent = ({ action }: any) => {
             <List
               bordered
               dataSource={value.hits}
-              renderItem={item => <List.Item>{item.title}</List.Item>}
+              renderItem={item => <List.Item>{item.name}</List.Item>}
             />
           ) : null}
         </div>
