@@ -1,44 +1,77 @@
-import React, { useState, useMemo, useCallback, useContext } from "react";
-import {fetchData} from "../apis/index";
+import React, { useState, useCallback, useEffect } from "react";
+import { fetchData } from "../apis/index";
 import ChildComponent from "./TwitterChildComponent";
-import { Input } from "antd";
-import { HooksContext } from "../App";
+import { Divider, Input } from "antd";
+import useDebounce from "../utils/";
+import { showRecords } from "../constants/";
 const Search = Input.Search;
-
 
 const UseTwitterCallBackAndMemo = () => {
   const [query, setQuery] = useState<string>();
-  const [memoCount, setMemoCount] = useState(0);
+  //const [memoCount, setMemoCount] = useState(0);
+  const [numberOfRecords, setLoadRecords] = useState(20);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  function handleScroll() {
+    if (
+      document.documentElement.scrollHeight ===
+      document.documentElement.clientHeight +
+        Math.floor(document.documentElement.scrollTop)
+    ) {
+      setLoadRecords(p => p + showRecords);
+      setQuery("");
+    }
+  }
+
+  const debouncedSearchTerm = useDebounce(query, 2000);
 
   const callbackFunction = useCallback(() => {
-    return fetchData(query).then(
+    let request;
+    if (debouncedSearchTerm) {
+      request = fetchData(debouncedSearchTerm);
+    } else {
+      request = fetchData(debouncedSearchTerm, numberOfRecords);
+    }
+    return request.then(
       results => {
         return { status: "success", hits: results.data };
       },
       error => ({ status: "failure", error })
     );
-  }, [query]);
+  }, [debouncedSearchTerm, numberOfRecords]);
 
-  useMemo(() => {
-    console.log(memoCount, "memo called");
-    return memoCount;
-  }, [memoCount]);
-  const context = useContext(HooksContext);
+  // useMemo(() => {
+  //   console.log(memoCount, "memo called");
+  //   return memoCount;
+  // }, [memoCount]);
+  // const context = useContext(HooksContext);
   return (
     <>
-    <div> useCallback  {context} </div>
-      <Search
-        placeholder="search keyword"
-        name="title"
-        value={query}
-        onSearch={value => setQuery(value)}
-        onChange={e => setQuery(e.target.value)}
-        enterButton
-      />
-      <button onClick={() => setMemoCount(memoCount + 1)}>
+      {/* <div> useCallback  {context} </div> */}
+      <div style={{ textAlign: "right" }}>
+        <Search
+          placeholder="search keyword"
+          name="title"
+          value={query}
+          onSearch={value => setQuery(value)}
+          onChange={e => setQuery(e.target.value)}
+          enterButton
+          style={{ width: 500 }}
+        />
+      </div>
+      
+      <Divider />
+
+      {/* <button onClick={() => setMemoCount(memoCount + 1)}>
         Change memo count
-      </button>
-      <ChildComponent action={callbackFunction} />
+      </button> */}
+      <ChildComponent
+        action={callbackFunction}
+        debouncedSearchTerm={debouncedSearchTerm}
+      />
     </>
   );
 };

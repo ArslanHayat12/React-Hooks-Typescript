@@ -11,7 +11,7 @@ const InfiniteScroll = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState<string>("");
-  const [pageNo, setPageNo] = useState(20);
+  const [numberOfRecords, setLoadRecords] = useState(20);
 
   useEffect(() => {
     if (document.documentElement.scrollTop === 0) {
@@ -30,7 +30,7 @@ const InfiniteScroll = () => {
       fetchSearchedListItems();
     } else {
       setIsFetching(true);
-      setPageNo(20);
+      setLoadRecords(20);
     }
     function fetchSearchedListItems(p?: any) {
       setListItems({ hits: [] });
@@ -41,10 +41,12 @@ const InfiniteScroll = () => {
         .catch(err => {
           console.log("Error", err);
         });
+      setIsFetching(false);
       setIsSearch(false);
     }
   }, [debouncedSearchTerm]);
-  const loadRecords = pageNo;
+
+  const loadRecords = numberOfRecords;
   useEffect(() => {
     if (!isFetching) return;
     fetchMoreListItems();
@@ -52,11 +54,12 @@ const InfiniteScroll = () => {
       setTimeout(() => {
         fetchData(null, loadRecords)
           .then(result => {
-            setListItems({ hits: [...(listItems.hits || []), ...result.data] });
+            setListItems({ hits:result.data });
           })
           .catch(err => {
             console.log("Error", err);
           });
+        setIsSearch(false);
         setIsFetching(false);
       }, 3000);
     }
@@ -65,9 +68,10 @@ const InfiniteScroll = () => {
   function handleScroll() {
     if (
       document.documentElement.scrollHeight ===
-      document.documentElement.clientHeight + document.documentElement.scrollTop
+      document.documentElement.clientHeight +
+        Math.floor(document.documentElement.scrollTop)
     ) {
-      setPageNo(p => p + showRecords);
+      setLoadRecords(p => p + showRecords);
       setIsFetching(true);
     }
   }

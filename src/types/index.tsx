@@ -5,20 +5,24 @@ export type MainState = {
 export type hitsResponse = {
   name: string;
   image_url: string;
+  brewers_tips:string;
+
 };
 
 export type State = {
-  status?: "empty" | "loading" | "error" | "success";
+  status?: "empty" | "loading" | "error" | "loaded";
   error?: string;
   data?: hitsResponse[];
   query?:string;
-  pageNo?:any
+  numberOfRecords?:any;
+  isLoaded?:boolean;
 };
 
 export type Action = {
-  type: "request" | "success" | "failure" | "input" ;
+  type: "request" | "success" | "failure" | "input" | "recordsToDisplay" | "loadMore" ;
   error?: string;
-  results?: hitsResponse[];
+  data?: hitsResponse[];
   query?:string;
-  pageNo?:any
+  numberOfRecords?:any;
+  isLoaded?:boolean;
 };

@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Tweets} from "../interfaces/interface";
-import { List } from "antd";
+import { Tweets } from "../interfaces/interface";
+import { List, Spin, Alert, Avatar } from "antd";
 
-const ChildComponent = ({ action }: any) => {
+const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
   const [value, setValue] = useState<Tweets>({ hits: [], status: "" });
+  const [isFetching, setIsFetching] = useState(false);
+
 
   useEffect(() => {
-    action().then((res: any) => setValue(res));
-  }, [action]);
+    setIsFetching(true);
+    if (debouncedSearchTerm) setValue({ hits: [], status: "" });
+    setTimeout(() => {
+      action().then((res: any) => {
+        if (res.hits.length) setValue(res);
+        setIsFetching(false);
+      });
+    }, 2000);
+  }, [action,debouncedSearchTerm]);
 
-  
+
+
   return (
     <>
       {value.status === "success" && (
@@ -18,9 +28,28 @@ const ChildComponent = ({ action }: any) => {
             <List
               bordered
               dataSource={value.hits}
-              renderItem={item => <List.Item>{item.name}</List.Item>}
+              renderItem={(item, i) => (
+                <List.Item
+                  key={i}
+                  extra={<img width={27} alt="logo" src={item.image_url} />}
+                >
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.image_url} />}
+                    title={item.name}
+                    description={item.brewers_tips}
+                  />
+                </List.Item>
+              )}
             />
           ) : null}
+        </div>
+      )}
+
+      
+      {isFetching && (
+        <div className="spinner">
+          <Spin />
+          <Alert message="Fetching Records ..." type="info" />
         </div>
       )}
     </>
