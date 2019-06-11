@@ -12,7 +12,6 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "recordsToDisplay":
       return {
-        query: state.query,
         data: state.data,
         numberOfRecords: (state.numberOfRecords || 0) + showRecords
       };
