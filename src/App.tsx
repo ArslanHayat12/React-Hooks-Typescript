@@ -1,7 +1,7 @@
 import React, { Component, createContext } from "react";
-import UseTwitterCallBackAndMemo from "./components/UseTwitterCallBackAndMemo";
-import TweetsReducer from "./components/useTweetsReducer";
-import InfiniteScroll from "./components/infiniteScroll";
+import UseTwitterCallBackAndMemo from "./components/UsePunkCallBackAndMemo";
+import PunksReducer from "./components/usePunkReducer";
+import InfiniteScroll from "./components/PunkUseState";
 import { Layout, Menu } from "antd";
 import { MainState } from "./types";
 import "antd/dist/antd.css";
@@ -49,7 +49,7 @@ class App extends Component<{}, MainState> {
                 {this.state.type === "useState" ? (
                   <InfiniteScroll />
                 ) : this.state.type === "useReducer" ? (
-                  <TweetsReducer />
+                  <PunksReducer />
                 ) : (
                   <UseTwitterCallBackAndMemo />
                 )}

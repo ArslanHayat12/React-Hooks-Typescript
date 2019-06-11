@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { fetchData } from "../apis/index";
-import ChildComponent from "./TwitterChildComponent";
+import ChildComponent from "./PunkChildComponent";
 import { Divider, Input } from "antd";
-import useDebounce from "../utils/";
-import { showRecords } from "../constants/";
+import useDebounce from "../utils";
+import { showRecords } from "../constants";
 const Search = Input.Search;
 
-const UseTwitterCallBackAndMemo = () => {
+const UsePunkCallBackAndMemo = () => {
   const [query, setQuery] = useState<string>();
   //const [memoCount, setMemoCount] = useState(0);
   const [numberOfRecords, setLoadRecords] = useState(20);
@@ -75,4 +75,4 @@ const UseTwitterCallBackAndMemo = () => {
     </>
   );
 };
-export default UseTwitterCallBackAndMemo;
+export default UsePunkCallBackAndMemo;

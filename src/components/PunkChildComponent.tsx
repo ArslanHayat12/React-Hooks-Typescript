@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Tweets } from "../interfaces/interface";
+import { Punks } from "../interfaces/interface";
 import { List, Spin, Alert, Avatar } from "antd";
 
 const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
-  const [value, setValue] = useState<Tweets>({ hits: [], status: "" });
+  const [value, setValue] = useState<Punks>({ hits: [], status: "" });
   const [isFetching, setIsFetching] = useState(false);
 
 

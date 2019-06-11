@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "../apis/index";
-import { Tweets } from "../interfaces/interface";
+import { Punks } from "../interfaces/interface";
 import { List, Spin, Alert, Avatar, Divider, Input } from "antd";
 import { showRecords } from "../constants/";
 import "../styles/styling.css";
 import useDebounce from "../utils/";
 const Search = Input.Search;
 const InfiniteScroll = () => {
-  const [listItems, setListItems] = useState<Tweets>({ hits: [] });
+  const [listItems, setListItems] = useState<Punks>({ hits: [] });
   const [isFetching, setIsFetching] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState<string>("");

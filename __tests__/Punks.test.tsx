@@ -1,6 +1,6 @@
 import React from "react";
 //import ReactDOM from 'react-dom';
-import {TweetService} from "../services/TweetServices";
+import {PunkService} from "../src/services/PunkServices";
 import { act } from "react-dom/test-utils";
 import * as enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -11,13 +11,13 @@ import { render, mount } from "enzyme";
 jest.useFakeTimers();
 
 /* Test user observable behaviour */
-describe("Tweets", () => {
+describe("Punks", () => {
   it("should render a proper table data", done => {
     const mock = new MockAdapter(axios);
     mock
       .onGet("http://hn.algolia.com/api/v1/search?query=redux")
       .reply(200, {});
-    const component = mount(<TweetService />);
+    const component = mount(<PunkService />);
     const div = component.find("div.ant-spin-container");
     //expect(div.children()).toHaveLength(0);
        console.log("=", div.debug());
@@ -28,14 +28,14 @@ describe("Tweets", () => {
     });
     act(() => {
       jest.runAllImmediates();
-     // render(<Tweets />);
+     // render(<Punks />);
     });
   });
 
   // let wrapper;
 
   // // it("should render", () => {
-  // //   const wrapper = shallow(<Tweets />);
+  // //   const wrapper = shallow(<Punks />);
   // //   expect(wrapper.exists()).toBeTruthy();
   // // });
 
@@ -45,7 +45,7 @@ describe("Tweets", () => {
   //   // mock
   //   //   .onGet("http://hn.algolia.com/api/v1/search?query=redux")
   //   //   .reply(200, {});
-  //   const wrapper = mount(<Tweets />);
+  //   const wrapper = mount(<Punks />);
   //   // act(() => {
   //   //   jest.runAllImmediates();
   //   // });

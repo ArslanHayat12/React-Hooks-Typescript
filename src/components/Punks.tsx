@@ -1,10 +1,10 @@
 import React from "react";
-import { TweetService, TweetSearchService } from "../services/TweetServices";
+import { PunkService, PunkSearchService } from "../services/PunkServices";
 import { Input } from "antd";
-const Tweets: React.FC<{}> = () => {
-  //const service = TweetService();
+const Punks: React.FC<{}> = () => {
+  //const service = PunkService();
   const [title, setTitle] = React.useState("");
-  // const search = TweetSearchService(title, service.hits);
+  // const search = PunkSearchService(title, service.hits);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
     setTitle(event.target.value);
@@ -21,9 +21,9 @@ const Tweets: React.FC<{}> = () => {
         enterButton
       />
       {/* for understanding purpose separate logic is handled */}
-      {title ? <TweetSearchService title={title}/> : <TweetService />}
+      {title ? <PunkSearchService title={title}/> : <PunkService />}
     </>
   );
 };
 
-export default Tweets;
+export default Punks;
