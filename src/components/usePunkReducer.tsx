@@ -56,7 +56,7 @@ function PunksReducer() {
     status: "empty",
     numberOfRecords: showRecords
   });
-
+  
   const debouncedSearchTerm = useDebounce(state.query, 1000);
 
   useEffect(() => {
