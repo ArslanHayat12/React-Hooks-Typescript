@@ -6,18 +6,14 @@ import { showRecords } from "../constants/";
 import "../styles/styling.css";
 import useDebounce from "../utils/";
 const Search = Input.Search;
-const InfiniteScroll = () => {
+const PunkUseState = () => {
   const [listItems, setListItems] = useState<Punks>({ hits: [] });
   const [isFetching, setIsFetching] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState<string>("");
-  const [numberOfRecords, setLoadRecords] = useState(20);
+  const [numberOfRecords, setLoadRecords] = useState(showRecords);
 
   useEffect(() => {
-    if (document.documentElement.scrollTop === 0) {
-      // setIsFetching(true);
-    }
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,7 +26,7 @@ const InfiniteScroll = () => {
       fetchSearchedListItems();
     } else {
       setIsFetching(true);
-      setLoadRecords(20);
+      setLoadRecords(showRecords);
     }
     function fetchSearchedListItems(p?: any) {
       setListItems({ hits: [] });
@@ -117,4 +113,4 @@ const InfiniteScroll = () => {
   );
 };
 
-export default InfiniteScroll;
+export default PunkUseState;

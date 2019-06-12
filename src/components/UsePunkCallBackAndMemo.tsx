@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { fetchData } from "../apis/index";
-import ChildComponent from "./PunkChildComponent";
+import ChildComponent from "./UsePunkCallBackAndMemoChild";
 import { Divider, Input } from "antd";
 import useDebounce from "../utils";
 import { showRecords } from "../constants";
