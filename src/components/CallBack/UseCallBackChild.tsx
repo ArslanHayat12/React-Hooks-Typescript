@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Punks } from "../interfaces/interface";
+import { Punks } from "../../interfaces/interface";
 import { List, Spin, Alert, Avatar } from "antd";
 
-const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
+const UseCallBackChild = ({ action, debouncedSearchTerm }: any) => {
   const [value, setValue] = useState<Punks>({ hits: [], status: "" });
   const [isFetching, setIsFetching] = useState(false);
 
@@ -51,4 +51,4 @@ const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
     </Fragment>
   );
 };
-export default ChildComponent;
+export default UseCallBackChild;

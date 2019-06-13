@@ -1,10 +1,8 @@
-import React from "react";
-import { PunkService, PunkSearchService } from "../services/PunkServices";
+import React,{Fragment} from "react";
+import { PunkService, PunkSearchService } from "../../services/PunkServices";
 import { Input } from "antd";
-const Punks: React.FC<{}> = () => {
-  //const service = PunkService();
+const HooksWithServices: React.FC<{}> = () => {
   const [title, setTitle] = React.useState("");
-  // const search = PunkSearchService(title, service.hits);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
     setTitle(event.target.value);
@@ -12,7 +10,7 @@ const Punks: React.FC<{}> = () => {
   const Search = Input.Search;
 
   return (
-    <>
+    <Fragment>
       <Search
         placeholder="search keyword"
         name="title"
@@ -22,8 +20,8 @@ const Punks: React.FC<{}> = () => {
       />
       {/* for understanding purpose separate logic is handled */}
       {title ? <PunkSearchService title={title}/> : <PunkService />}
-    </>
+    </Fragment>
   );
 };
 
-export default Punks;
+export default HooksWithServices;

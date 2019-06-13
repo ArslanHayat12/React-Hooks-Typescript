@@ -1,10 +1,10 @@
 import React, { Fragment, useReducer, useEffect } from "react";
-import { fetchData } from "../apis/index";
-import { State, Action } from "../types";
+import { fetchData } from "../../apis/index";
+import { State, Action } from "../../types";
 import { List, Spin, Alert, Avatar, Divider, Input } from "antd";
-import { showRecords } from "../constants";
-import "../styles/styling.css";
-import useDebounce from "../utils";
+import { showRecords } from "../../constants";
+import "../../styles/styling.css";
+import useDebounce from "../../utils";
 import InfiniteScroll from "react-infinite-scroll-component";
 const Search = Input.Search;
 
@@ -49,7 +49,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function PunksReducer() {
+function UseReducer() {
   const [state, dispatch] = useReducer(reducer, {
     status: "empty",
     numberOfRecords: showRecords
@@ -103,7 +103,7 @@ function PunksReducer() {
 
       <Divider />
       {state.status === "loaded" ? (
-        <>
+        <Fragment>
           {state.data && (
             <InfiniteScroll
               dataLength={state.data.length}
@@ -139,7 +139,7 @@ function PunksReducer() {
               />
             </InfiniteScroll>
           )}
-        </>
+        </Fragment>
       ) : state.status === "error" ? (
         <span>Error: {state.error}</span>
       ) : (
@@ -152,4 +152,4 @@ function PunksReducer() {
   );
 }
 
-export default PunksReducer;
+export default UseReducer;

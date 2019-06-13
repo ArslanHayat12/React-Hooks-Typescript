@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
-import UseTwitterCallBackAndMemo from "./components/UsePunkCallBackAndMemo";
-import PunksReducer from "./components/UsePunkReducer";
-import InfiniteScroll from "./components/UsePunkState";
+import UseTwitterCallBackAndMemo from "./components/CallBack/UseCallBack";
+import PunksReducer from "./components/Reducer/UseReducer";
+import InfiniteScroll from "./components/State/UseState";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 const { Header, Footer, Content } = Layout;

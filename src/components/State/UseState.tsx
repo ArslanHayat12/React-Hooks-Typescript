@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { fetchData } from "../apis/index";
-import { PunkState } from "../types";
+import { fetchData } from "../../apis/index";
+import { PunkState } from "../../types";
 import { List, Spin, Alert, Avatar, Divider, Input } from "antd";
-import { showRecords } from "../constants";
-import "../styles/styling.css";
-import useDebounce from "../utils";
+import { showRecords } from "../../constants";
+import "../../styles/styling.css";
+import useDebounce from "../../utils";
 const Search = Input.Search;
 
-const PunkUseState = () => {
+const UseState = () => {
   const [state, setState] = useState<PunkState>({
     query: "",
     numberOfRecords: showRecords,
@@ -139,4 +139,4 @@ const PunkUseState = () => {
   );
 };
 
-export default PunkUseState;
+export default UseState;
