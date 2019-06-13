@@ -47,7 +47,6 @@ const App: React.FC = () => {
                 <UseCallBack />
               )}
             </HooksContext.Provider>
-            {/* <List /> */}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Searching of Content</Footer>
