@@ -37,10 +37,11 @@ export type Punks = {
   state?: string;
   status?: string;
 };
+
 export type PunkState = {
-  query?:string,
-  numberOfRecords?:number,
-  isFetching?:boolean,
-  isSearch?:boolean,
-  listItems?:Punks
+  query?: string;
+  numberOfRecords?: number;
+  isFetching?: boolean;
+  isSearch?: boolean;
+  listItems?: Punks;
 };
