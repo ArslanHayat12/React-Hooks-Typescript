@@ -4,7 +4,7 @@ import { List, Spin, Alert, Avatar } from "antd";
 
 const UseCallBackChild = ({ action, debouncedSearchTerm }: any) => {
   const [value, setValue] = useState<Punks>({ hits: [], status: "" });
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     setIsFetching(true);

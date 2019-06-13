@@ -8,7 +8,7 @@ import useDebounce from "../../utils";
 import InfiniteScroll from "react-infinite-scroll-component";
 const Search = Input.Search;
 
-function reducer(state: State, action: Action): State {
+const reducer=(state: State, action: Action): State => {
   switch (action.type) {
     case "recordsToDisplay":
       return {
@@ -58,15 +58,12 @@ function UseReducer() {
   const debouncedSearchTerm = useDebounce(state.query, 1000);
 
   useEffect(() => {
-    let ignore = false;
     let request = debouncedSearchTerm
       ? fetchData(debouncedSearchTerm)
       : fetchData(debouncedSearchTerm, state.numberOfRecords || showRecords);
-    // dispatch({ type: "request" });
-    //  setTimeout(() => {
+
     request.then(
       results => {
-        if (!ignore)
           return dispatch({
             type: "success",
             data: results.data
@@ -74,10 +71,6 @@ function UseReducer() {
       },
       error => dispatch({ type: "failure", query: debouncedSearchTerm, error })
     );
-    //  }, 1000);
-    return () => {
-      ignore = true;
-    };
   }, [state.numberOfRecords, debouncedSearchTerm]);
   let fetchMoreData = () => {
     setTimeout(() => {
