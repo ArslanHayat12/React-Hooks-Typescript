@@ -26,3 +26,21 @@ export type Action = {
   numberOfRecords?: any;
   isLoaded?: boolean;
 };
+
+type PunksType = {
+  name: string;
+  image_url?: string;
+  brewers_tips?: string;
+};
+export type Punks = {
+  hits?: PunksType[];
+  state?: string;
+  status?: string;
+};
+export type PunkState = {
+  query?:string,
+  numberOfRecords?:number,
+  isFetching?:boolean,
+  isSearch?:boolean,
+  listItems?:Punks
+};

@@ -1,23 +1,16 @@
-import React, { Component, createContext } from "react";
+import React, { createContext, useState } from "react";
 import UseTwitterCallBackAndMemo from "./components/UsePunkCallBackAndMemo";
-import PunksReducer from "./components/usePunkReducer";
-import InfiniteScroll from "./components/PunkUseState";
+import PunksReducer from "./components/UsePunkReducer";
+import InfiniteScroll from "./components/UsePunkState";
 import { Layout, Menu } from "antd";
-import { MainState } from "./types";
 import "antd/dist/antd.css";
 const { Header, Footer, Content } = Layout;
 
 type Hooks = "React Hooks";
 export const HooksContext = createContext<Hooks>("React Hooks");
-class App extends Component<{}, MainState> {
-  state: MainState = {
-    type: "useState"
-  };
-  public handleClick(event: any): void {
-    this.setState({ type: event.key });
-  }
+const App: React.FC = () => {
+  const [state,setState]=useState<string>("useState");
 
-  render() {
     return (
       <div className="App">
         <Layout className="layout">
@@ -29,15 +22,15 @@ class App extends Component<{}, MainState> {
               defaultSelectedKeys={["useState"]}
               style={{ lineHeight: "64px" }}
             >
-              <Menu.Item key="useState" onClick={e => this.handleClick(e)}>
+              <Menu.Item onClick={() => setState("useState")}>
                 {" "}
                 Use State Example
               </Menu.Item>
-              <Menu.Item key="useReducer" onClick={e => this.handleClick(e)}>
+              <Menu.Item  onClick={() => setState("useReducer")}>
                 {" "}
                 Use Reducer Example
               </Menu.Item>
-              <Menu.Item key="useCallback" onClick={e => this.handleClick(e)}>
+              <Menu.Item onClick={() => setState("useCallback")}>
                 {" "}
                 Use Callback Example{" "}
               </Menu.Item>
@@ -46,9 +39,9 @@ class App extends Component<{}, MainState> {
           <Content style={{ padding: "0 250px" }}>
             <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
               <HooksContext.Provider value="React Hooks">
-                {this.state.type === "useState" ? (
+                {state === "useState" ? (
                   <InfiniteScroll />
-                ) : this.state.type === "useReducer" ? (
+                ) : state === "useReducer" ? (
                   <PunksReducer />
                 ) : (
                   <UseTwitterCallBackAndMemo />
@@ -61,7 +54,6 @@ class App extends Component<{}, MainState> {
         </Layout>
       </div>
     );
-  }
 }
 
 export default App;

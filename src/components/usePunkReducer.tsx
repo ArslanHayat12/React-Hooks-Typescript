@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { Fragment, useReducer, useEffect } from "react";
 import { fetchData } from "../apis/index";
 import { State, Action } from "../types";
 import { List, Spin, Alert, Avatar, Divider, Input } from "antd";
@@ -21,7 +21,6 @@ function reducer(state: State, action: Action): State {
         data: [],
         numberOfRecords: state.numberOfRecords
       };
-
     case "success":
       const filteredArr = [
         ...(state.data || []),
@@ -55,7 +54,7 @@ function PunksReducer() {
     status: "empty",
     numberOfRecords: showRecords
   });
-  
+
   const debouncedSearchTerm = useDebounce(state.query, 1000);
 
   useEffect(() => {
@@ -89,7 +88,7 @@ function PunksReducer() {
   };
 
   return (
-    <>
+    <Fragment>
       <div style={{ textAlign: "right" }}>
         <Search
           placeholder="search keyword"
@@ -114,12 +113,12 @@ function PunksReducer() {
               scrollThreshold={1}
               hasMore={true}
               loader={
-                debouncedSearchTerm ? null:(
+                debouncedSearchTerm ? null : (
                   <div className="spinner">
                     <Spin />
                     <Alert message="Fetching Records ..." type="info" />
                   </div>
-                ) 
+                )
               }
             >
               <List
@@ -149,7 +148,7 @@ function PunksReducer() {
           <Alert message="Fetching Records ..." type="info" />
         </div>
       )}
-    </>
+    </Fragment>
   );
 }
 

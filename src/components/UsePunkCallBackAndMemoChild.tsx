@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Punks } from "../interfaces/interface";
 import { List, Spin, Alert, Avatar } from "antd";
 
 const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
   const [value, setValue] = useState<Punks>({ hits: [], status: "" });
   const [isFetching, setIsFetching] = useState(false);
-
 
   useEffect(() => {
     setIsFetching(true);
@@ -16,12 +15,10 @@ const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
         setIsFetching(false);
       });
     }, 2000);
-  }, [action,debouncedSearchTerm]);
-
-
+  }, [action, debouncedSearchTerm]);
 
   return (
-    <>
+    <Fragment>
       {value.status === "success" && (
         <div>
           {value.hits ? (
@@ -45,14 +42,13 @@ const ChildComponent = ({ action, debouncedSearchTerm }: any) => {
         </div>
       )}
 
-      
       {isFetching && (
         <div className="spinner">
           <Spin />
           <Alert message="Fetching Records ..." type="info" />
         </div>
       )}
-    </>
+    </Fragment>
   );
 };
 export default ChildComponent;
